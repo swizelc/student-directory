@@ -7,7 +7,7 @@ end
 # Footer Method
 def print(students)
   students.each do |name|
-    puts "name:" + name + "cohort: november"
+    puts (students.find_index(name) + 1).to_s + ". name: " + name + " cohort: november"
   end
 end
 
