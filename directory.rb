@@ -105,6 +105,23 @@ def changes(students)
 end
 
 
+def print_cohort(students)
+  cohorts = []
+  students.each do |student|
+    cohort = student[:cohort]
+    if ! (cohorts.include? cohort)
+      cohorts.push(cohort)
+    end
+  end
+  cohorts.each do |cohort|
+    puts "Cohort: #{cohort}".center(50, "-")
+    students.each do |student|
+      if student[:cohort] == cohort
+        puts student[:name]
+      end
+    end
+  end
+end
 
 # Student Normal
 def print(students)
@@ -197,6 +214,6 @@ end
 # Run our code
 print_header
 students = input_students
-
-print(students)
+print_cohort(students)
+#print(students)
 print_footer(students)
