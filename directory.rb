@@ -1,7 +1,6 @@
 # Header Method
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(50, "~")
 end
 
 # Input Students Method
@@ -78,6 +77,7 @@ def print(students)
   end
 end
 
+=begin
 # Student While
 def print_while(students)
   # Counter
@@ -128,16 +128,17 @@ def print_length_filter(students)
   # End Loop
   end
 end
-
+=end
 
 # Print
 def print_footer(students)
   student_count = students.length
-  puts "Overall, we have #{student_count} great students"
+  puts "Overall, we have #{student_count} great students".center(50, "-")
 end
 
 # Run our code
+print_header
 students = input_students
-#print_header
+
 print(students)
 print_footer(students)
