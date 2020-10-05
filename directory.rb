@@ -11,6 +11,22 @@ def print(students)
   end
 end
 
+
+# Student While
+def print_while(students)
+  # Counter
+  max_counter = students.length
+  while max_counter > 0
+    # Lower Counter
+    max_counter -= 1
+    # Get the number
+    num = students.length - max_counter
+    # Puts the line
+    puts num.to_s + ". name: " + students.reverse[max_counter] + " cohort: november"
+  end
+end
+
+
 # Input Students Method
 def input_students
   # Make Array
@@ -61,7 +77,7 @@ end
 
 students = input_students
 print_header
-print(students)
+print_while(students)
 print_footer(students)
 student_by_first_char(students)
 student_by_length(students)
