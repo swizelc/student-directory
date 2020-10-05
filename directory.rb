@@ -54,6 +54,58 @@ def input_students
   return students
 end
 
+def edit_menu
+  puts "Enter number for options"
+  puts "1. Name"
+  puts "2. Cohort"
+  puts "3. Hobbies"
+  puts "4. Country"
+  puts "5. Height"
+  option = gets.chomp().to_i
+
+  while true do
+    if option <= 5 && option > 0
+      return option
+      break
+    else
+      puts "Enter valid option"
+      option = gets.chomp().to_i
+    end
+  end
+end
+
+
+def changes(students)
+  puts "Input name of the student"
+  name = gets.chomp
+  students.each do |hash|
+    if hash[:name] == name
+      puts "Edit Mode".center(50, "-")
+      option = edit_menu()
+      case option
+      when 1
+        puts "Change name to: "
+        hash[:name] = gets.chomp
+      when 2
+        puts "Change cohort to: "
+        hash[:cohort] = gets.chomp
+      when 3
+        puts "Change hobbies to: "
+        hash[:hobbies] = gets.chomp
+      when 4
+        puts "Change country to: "
+        hash[:country] = gets.chomp
+      when 5
+        puts "Change height to: "
+        hash[:height] = gets.chomp
+      end
+    end
+  end
+  print(students)
+end
+
+
+
 # Student Normal
 def print(students)
   # Loop Over Array
@@ -74,8 +126,14 @@ def print(students)
     end
     # Puts the line
     puts line
+    end
+  puts "Would you like to make changes? y/n"
+  ans = gets.chomp
+  if ans == "y"
+    changes(students)
   end
 end
+
 
 =begin
 # Student While
