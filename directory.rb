@@ -33,7 +33,16 @@ def input_students
   return students
 end
 
-
+# Student by first character
+def studend_by_first_char(students)
+  puts "enter character: "
+  char = gets.chomp
+  students.each { |student|
+    if student[0] == char
+      puts student
+    end
+  }
+end
 # Print
 def print_footer(students)
   student_count = students.length
@@ -44,3 +53,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+studend_by_first_char(students)
