@@ -34,11 +34,21 @@ def input_students
 end
 
 # Student by first character
-def studend_by_first_char(students)
+def student_by_first_char(students)
   puts "enter character: "
   char = gets.chomp
   students.each { |student|
     if student[0] == char
+      puts student
+    end
+  }
+end
+
+def student_by_length(students)
+  puts "enter length to be less than or equal to"
+  len = gets.chomp.to_i
+  students.each { |student|
+    if student.length <= len
       puts student
     end
   }
@@ -53,4 +63,5 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-studend_by_first_char(students)
+student_by_first_char(students)
+student_by_length(students)
