@@ -221,6 +221,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
@@ -238,8 +240,23 @@ def print_menu
   puts "Select an option".center(50, "-")
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
+
+def save_students
+  file = File.open("students.csv", "w")
+  file_hobbies = File.open("student_hobbies.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:country], student[:height]]
+    student_hobbies = [student[:name], student[:hobbies]]
+    csv_line = student_data.join(",")
+    csv_line2 = student_hobbies.join(",")
+    file.puts csv_line
+    file_hobbies.puts csv_line2
+  end
+end
+
 
 def interactive_menu()
   @students = []
