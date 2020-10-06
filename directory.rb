@@ -4,9 +4,8 @@ def print_header
 end
 
 # Input Students Method
-def input_students
+def input_students()
   # Make Array
-  students = []
   # Start Loop
   while true
     # Ask for input
@@ -43,7 +42,7 @@ def input_students
         :height => height
       }
       # Push
-      students.push(hash)
+      @students.push(hash)
     else
       break
     end
@@ -51,7 +50,7 @@ def input_students
   end
 
   # Return Array
-  return students
+  return @students
 end
 
 def edit_menu
@@ -75,10 +74,10 @@ def edit_menu
 end
 
 
-def changes(students)
+def changes()
   puts "Input name of the student".center(50)
   name = gets.chomp
-  students.each do |hash|
+  @students.each do |hash|
     if hash[:name] == name
       puts "Edit Mode".center(50, "-")
       option = edit_menu()
@@ -101,13 +100,13 @@ def changes(students)
       end
     end
   end
-  print(students)
+  print(@students)
 end
 
 
-def print_cohort(students)
+def print_cohort()
   cohorts = []
-  students.each do |student|
+  @students.each do |student|
     cohort = student[:cohort]
     if ! (cohorts.include? cohort)
       cohorts.push(cohort)
@@ -115,7 +114,7 @@ def print_cohort(students)
   end
   cohorts.each do |cohort|
     puts "Cohort: #{cohort}".center(50, "-")
-    students.each do |student|
+    @students.each do |student|
       if student[:cohort] == cohort
         puts student[:name]
       end
@@ -124,11 +123,11 @@ def print_cohort(students)
 end
 
 # Student Normal
-def print(students)
+def print()
   # Loop Over Array
-  students.each do |hash|
+  @students.each do |hash|
     # Get the number
-    num = students.find_index(hash) + 1
+    num = @students.find_index(hash) + 1
     # Start String
     line = num.to_s + ". "
     # Loop Over Hash
@@ -147,7 +146,7 @@ def print(students)
   puts "Would you like to make changes? y/n".center(50, "-")
   ans = gets.chomp
   if ans == "y"
-    changes(students)
+    changes()
   end
 end
 
@@ -206,8 +205,8 @@ end
 =end
 
 # Print
-def print_footer(students)
-  student_count = students.length
+def print_footer()
+  student_count = @students.length
   if student_count > 1
     puts "Overall, we have #{student_count} great students".center(50, "~")
   elsif student_count == 1
@@ -217,7 +216,8 @@ def print_footer(students)
   end
 end
 
-def interactive_menu(students = [])
+def interactive_menu()
+  @students = []
   loop do
     puts "Select an option".center(50, "-")
     puts "1. Input the students"
@@ -227,11 +227,11 @@ def interactive_menu(students = [])
     selection = gets.chomp
     case selection
       when "1"
-        students = input_students
+        @students = input_students()
       when "2"
         print_header
-        print(students)
-        print_footer(students)
+        print()
+        print_footer()
       when "9"
         break
       else
