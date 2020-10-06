@@ -18,15 +18,10 @@ def input_students()
       # Cohort
       puts "Input the student cohort.".center(50)
       cohort = gets.chomp
-      # Hobby
-      #puts "Input number of hobbies".center(50)
-      #hobbies_num = gets.chomp.to_i
-      #hobbies = []
-      #hobbies_num.times {
+
       puts "Input the student hobby. (To enter multiple: separate with dashes)".center(50)
       hobby = gets.chomp
-        #hobbies.push(hobby)
-      #}
+
       # Country
       puts "Input the student country.".center(50)
       country = gets.chomp
@@ -207,7 +202,7 @@ end
 
 # Print
 def print_footer()
-  student_count = @students.length
+  student_count = @students.length - 1
   if student_count > 1
     puts "Overall, we have #{student_count} great students".center(50, "~")
   elsif student_count == 1
@@ -258,17 +253,12 @@ end
 
 def save_students
   file = File.open("students.csv", "w")
-  #file_hobbies = File.open("student_hobbies.csv", "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobbies], student[:country], student[:height]]
-    #student_hobbies = [student[:name], student[:hobbies]]
     csv_line = student_data.join(",")
-    #csv_line2 = student_hobbies.join(",")
     file.puts csv_line
-    #file_hobbies.puts csv_line2
   end
   file.close
-  #file_hobbies.close
 end
 
 
