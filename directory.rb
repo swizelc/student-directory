@@ -19,14 +19,14 @@ def input_students()
       puts "Input the student cohort.".center(50)
       cohort = gets.chomp
       # Hobby
-      puts "Input number of hobbies".center(50)
-      hobbies_num = gets.chomp.to_i
-      hobbies = []
-      hobbies_num.times {
-        puts "Input the student hobby.".center(50)
-        hobby = gets.chomp
-        hobbies.push(hobby)
-      }
+      #puts "Input number of hobbies".center(50)
+      #hobbies_num = gets.chomp.to_i
+      #hobbies = []
+      #hobbies_num.times {
+      puts "Input the student hobby. (To enter multiple: separate with dashes)".center(50)
+      hobby = gets.chomp
+        #hobbies.push(hobby)
+      #}
       # Country
       puts "Input the student country.".center(50)
       country = gets.chomp
@@ -37,7 +37,7 @@ def input_students()
       hash = {
         :name => name,
         :cohort => cohort,
-        :hobbies => hobbies,
+        :hobbies => hobby,
         :country => country,
         :height => height
       }
@@ -127,18 +127,20 @@ def print_names()
   # Loop Over Array
   @students.each do |hash|
     # Get the number
-    num = @students.find_index(hash) + 1
+    num = @students.find_index(hash)
     # Start String
-    line = num.to_s + ". "
-    # Loop Over Hash
-    hash.each do |key, value|
-      # Add to line
-      if value.is_a? String
-        line = line + key.to_s + ": " + value.to_s + ", "
-      else
-        line = line + key.to_s + ": " + value.join(", ") + ", "
-      end
+    if num > 0
+      line = num.to_s + ". "
+      # Loop Over Hash
+      hash.each do |key, value|
+        # Add to line
+        if value.is_a? String
+          line = line + key.to_s + ": " + value.to_s + ", "
+        else
+          line = line + key.to_s + ": " + value.join(", ") + ", "
+        end
     # End Loop Hash
+      end
     end
     # Puts the line
     puts line
@@ -271,7 +273,7 @@ end
 
 
 def interactive_menu()
-  @students = []
+  @students = [{name: "name", cohort: "cohort", hobbies: "hobbies", country: "country", height: "height" }]
   load_students
   loop do
     print_menu
