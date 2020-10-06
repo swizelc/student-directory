@@ -129,10 +129,10 @@ def print_names()
       # Loop Over Hash
       hash.each do |key, value|
         # Add to line
-        if value.is_a? String
-          line = line + key.to_s + ": " + value.to_s + ", "
+        if key == :height
+          line = line + key.to_s + ": " + value.to_s
         else
-          line = line + key.to_s + ": " + value.join(", ") + ", "
+          line = line + key.to_s + ": " + value.to_s + ", "
         end
     # End Loop Hash
       end
@@ -263,8 +263,12 @@ end
 
 
 def interactive_menu()
-  @students = [{name: "name", cohort: "cohort", hobbies: "hobbies", country: "country", height: "height" }]
-  load_students
+  if File.file? ("students.csv")
+    @students = []
+    load_students
+  else
+    @students = [{name: "name", cohort: "cohort", hobbies: "hobbies", country: "country", height: "height" }]
+  end
   loop do
     print_menu
     process(gets.chomp)
