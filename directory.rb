@@ -147,7 +147,6 @@ def print_names()
   end
 end
 
-
 def print_footer()
   student_count = @students.length - 1
   if student_count > 1
@@ -168,6 +167,7 @@ def process(selection)
     when "3"
       save_students
     when "9"
+      puts("Goodbye!")
       exit
     else
       puts "I don't know what you mean, try again"
@@ -202,22 +202,20 @@ def load_students
   file.close
 end
 
-
 def save_students
   if !(ARGV.empty?)
     file = File.open(ARGV.first, "w")
   else
     file = File.open("students.csv", "w")
   end
-
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobbies], student[:country], student[:height]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  puts("Saved!")
 end
-
 
 def interactive_menu()
   if (File.file? ("students.csv")) || (File.file? (ARGV.first.to_s))
