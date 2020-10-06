@@ -244,22 +244,35 @@ def print_menu
   puts "9. Exit"
 end
 
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, cohort, hobbies, country, height = line.chomp.split(',')
+    @students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
+  end
+  file.close
+end
+
+
 def save_students
   file = File.open("students.csv", "w")
-  file_hobbies = File.open("student_hobbies.csv", "w")
+  #file_hobbies = File.open("student_hobbies.csv", "w")
   @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:country], student[:height]]
-    student_hobbies = [student[:name], student[:hobbies]]
+    student_data = [student[:name], student[:cohort], student[:hobbies], student[:country], student[:height]]
+    #student_hobbies = [student[:name], student[:hobbies]]
     csv_line = student_data.join(",")
-    csv_line2 = student_hobbies.join(",")
+    #csv_line2 = student_hobbies.join(",")
     file.puts csv_line
-    file_hobbies.puts csv_line2
+    #file_hobbies.puts csv_line2
   end
+  file.close
+  #file_hobbies.close
 end
 
 
 def interactive_menu()
   @students = []
+  load_students
   loop do
     print_menu
     process(gets.chomp)
