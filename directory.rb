@@ -10,29 +10,29 @@ def input_students
   # Start Loop
   while true
     # Ask for input
-    puts "Input the student name."
-    puts "To finish, hit return twice"
+    puts "Input the student name.".center(50)
+    puts "To finish, hit return twice".center(50)
     # Get input
     name = gets.chomp
     # If they enter a name, save the name
     if name != ""
       # Cohort
-      puts "Input the student cohort."
+      puts "Input the student cohort.".center(50)
       cohort = gets.chomp
       # Hobby
-      puts "Input number of hobbies"
+      puts "Input number of hobbies".center(50)
       hobbies_num = gets.chomp.to_i
       hobbies = []
       hobbies_num.times {
-        puts "Input the student hobby."
+        puts "Input the student hobby.".center(50)
         hobby = gets.chomp
         hobbies.push(hobby)
       }
       # Country
-      puts "Input the student country."
+      puts "Input the student country.".center(50)
       country = gets.chomp
       # Height
-      puts "Input the student height."
+      puts "Input the student height.".center(50)
       height = gets.chomp
       # Make Hash
       hash = {
@@ -68,7 +68,7 @@ def edit_menu
       return option
       break
     else
-      puts "Enter valid option"
+      puts "Enter valid option".center(50, "!  ")
       option = gets.chomp().to_i
     end
   end
@@ -76,7 +76,7 @@ end
 
 
 def changes(students)
-  puts "Input name of the student"
+  puts "Input name of the student".center(50)
   name = gets.chomp
   students.each do |hash|
     if hash[:name] == name
@@ -144,7 +144,7 @@ def print(students)
     # Puts the line
     puts line
     end
-  puts "Would you like to make changes? y/n"
+  puts "Would you like to make changes? y/n".center(50, "-")
   ans = gets.chomp
   if ans == "y"
     changes(students)
@@ -209,16 +209,35 @@ end
 def print_footer(students)
   student_count = students.length
   if student_count > 1
-    puts "Overall, we have #{student_count} great students".center(50, "-")
+    puts "Overall, we have #{student_count} great students".center(50, "~")
   elsif student_count == 1
-    puts "Overall, we have #{student_count} great student".center(50, "-")
+    puts "Overall, we have #{student_count} great student".center(50, "~")
   else
-    puts "Overall, we have no students".center(50, "-")
+    puts "Overall, we have no students".center(50, "~")
+  end
 end
 
-# Run our code
-print_header
-students = input_students
-print_cohort(students)
-#print(students)
-print_footer(students)
+def interactive_menu(students = [])
+  loop do
+    puts "Select an option".center(50, "-")
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+
+    selection = gets.chomp
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        break
+      else
+        puts "I don't know what you meant, try again".center(50)
+    end
+  end
+end
+
+interactive_menu()
