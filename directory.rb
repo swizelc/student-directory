@@ -100,7 +100,7 @@ def changes()
       end
     end
   end
-  print(@students)
+  print_names()
 end
 
 
@@ -123,7 +123,7 @@ def print_cohort()
 end
 
 # Student Normal
-def print()
+def print_names()
   # Loop Over Array
   @students.each do |hash|
     # Get the number
@@ -149,7 +149,6 @@ def print()
     changes()
   end
 end
-
 
 =begin
 # Student While
@@ -216,27 +215,37 @@ def print_footer()
   end
 end
 
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+  end
+end
+
+def show_students
+  print_header
+  print_names()
+  print_footer()
+end
+
+def print_menu
+  puts "Select an option".center(50, "-")
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
 def interactive_menu()
   @students = []
   loop do
-    puts "Select an option".center(50, "-")
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-
-    selection = gets.chomp
-    case selection
-      when "1"
-        @students = input_students()
-      when "2"
-        print_header
-        print()
-        print_footer()
-      when "9"
-        break
-      else
-        puts "I don't know what you meant, try again".center(50)
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 
