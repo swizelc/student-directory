@@ -3,6 +3,10 @@ def print_header
   puts "The students of Villains Academy".center(50, "~")
 end
 
+def ask(text)
+  puts "#{text}".center(50)
+  return STDIN.gets.chomp
+end
 # Input Students Method
 def input_students()
   # Make Array
@@ -16,18 +20,12 @@ def input_students()
     # If they enter a name, save the name
     if name != ""
       # Cohort
-      puts "Input the student cohort.".center(50)
-      cohort = STDIN.gets.chomp
-
-      puts "Input the student hobby. (To enter multiple: separate with dashes)".center(50)
-      hobby = STDIN.gets.chomp
-
+      cohort = ask("Input the student cohort.")
+      hobby = ask("Input the student hobby. (To enter multiple: separate with dashes)")
       # Country
-      puts "Input the student country.".center(50)
-      country = STDIN.gets.chomp
+      country = ask("Input the student country.")
       # Height
-      puts "Input the student height.".center(50)
-      height = STDIN.gets.chomp
+      height = ask("Input the student height.")
       # Make Hash
       hash = {
         :name => name,
@@ -48,13 +46,17 @@ def input_students()
   return @students
 end
 
-def edit_menu
+def edit_print
   puts "Enter number for options"
   puts "1. Name"
   puts "2. Cohort"
   puts "3. Hobbies"
   puts "4. Country"
   puts "5. Height"
+end
+
+def edit_menu
+  edit_print
   option = STDIN.gets.chomp().to_i
 
   while true do
@@ -70,8 +72,7 @@ end
 
 
 def changes()
-  puts "Input name of the student".center(50)
-  name = STDIN.gets.chomp
+  name = ask("Input name of the student")
   @students.each do |hash|
     if hash[:name] == name
       puts "Edit Mode".center(50, "-")
@@ -140,8 +141,7 @@ def print_names()
     # Puts the line
     puts line
     end
-  puts "Would you like to make changes? y/n".center(50, "-")
-  ans = STDIN.gets.chomp
+  ans = ask("Would you like to make changes? y/n")
   if ans == "y"
     changes()
   end
