@@ -12,22 +12,22 @@ def input_students()
     puts "Input the student name.".center(50)
     puts "To finish, hit return twice".center(50)
     # Get input
-    name = gets.chomp
+    name = STDIN.gets.chomp
     # If they enter a name, save the name
     if name != ""
       # Cohort
       puts "Input the student cohort.".center(50)
-      cohort = gets.chomp
+      cohort = STDIN.gets.chomp
 
       puts "Input the student hobby. (To enter multiple: separate with dashes)".center(50)
-      hobby = gets.chomp
+      hobby = STDIN.gets.chomp
 
       # Country
       puts "Input the student country.".center(50)
-      country = gets.chomp
+      country = STDIN.gets.chomp
       # Height
       puts "Input the student height.".center(50)
-      height = gets.chomp
+      height = STDIN.gets.chomp
       # Make Hash
       hash = {
         :name => name,
@@ -55,7 +55,7 @@ def edit_menu
   puts "3. Hobbies"
   puts "4. Country"
   puts "5. Height"
-  option = gets.chomp().to_i
+  option = STDIN.gets.chomp().to_i
 
   while true do
     if option <= 5 && option > 0
@@ -63,7 +63,7 @@ def edit_menu
       break
     else
       puts "Enter valid option".center(50, "!  ")
-      option = gets.chomp().to_i
+      option = STDIN.gets.chomp().to_i
     end
   end
 end
@@ -71,7 +71,7 @@ end
 
 def changes()
   puts "Input name of the student".center(50)
-  name = gets.chomp
+  name = STDIN.gets.chomp
   @students.each do |hash|
     if hash[:name] == name
       puts "Edit Mode".center(50, "-")
@@ -79,19 +79,19 @@ def changes()
       case option
       when 1
         puts "Change name to: "
-        hash[:name] = gets.chomp
+        hash[:name] = STDIN.gets.chomp
       when 2
         puts "Change cohort to: "
-        hash[:cohort] = gets.chomp
+        hash[:cohort] = STDIN.gets.chomp
       when 3
         puts "Change hobbies to: "
-        hash[:hobbies] = gets.chomp
+        hash[:hobbies] = STDIN.gets.chomp
       when 4
         puts "Change country to: "
-        hash[:country] = gets.chomp
+        hash[:country] = STDIN.gets.chomp
       when 5
         puts "Change height to: "
-        hash[:height] = gets.chomp
+        hash[:height] = STDIN.gets.chomp
       end
     end
   end
@@ -141,66 +141,13 @@ def print_names()
     puts line
     end
   puts "Would you like to make changes? y/n".center(50, "-")
-  ans = gets.chomp
+  ans = STDIN.gets.chomp
   if ans == "y"
     changes()
   end
 end
 
-=begin
-# Student While
-def print_while(students)
-  # Counter
-  max_counter = students.length
-  while max_counter > 0
-    # Lower Counter
-    max_counter -= 1
-    # Get the number
-    num = students.length - max_counter
-    # Puts the line
-    puts num.to_s + ". name: " + students.reverse[max_counter] + " cohort: november"
-  end
-end
 
-# Student First Character Filter
-def print_char_filter(students)
-  # Get char to search for
-  puts "Input character to search for."
-  char = gets.chomp
-  # Start Loop
-  students.each do |name|
-    # Char?
-    if name[0] = char
-      # Get the number
-      num = students.find_index(name) + 1
-      # Puts the line
-      puts num.to_s + ". name: " + name + " cohort: november"
-    end
-  # End Loop
-  end
-end
-
-# Student Length Filter
-def print_length_filter(students)
-  # Get char to search for
-  puts "Input length to be less than or equal to."
-  len = gets.chomp.to_i
-
-  # Start Loop
-  students.each do |name|
-    # Char?
-    if name.length <= len
-      # Get the number
-      num = students.find_index(name) + 1
-      # Puts the line
-      puts num.to_s + ". name: " + name + " cohort: november"
-    end
-  # End Loop
-  end
-end
-=end
-
-# Print
 def print_footer()
   student_count = @students.length - 1
   if student_count > 1
@@ -242,7 +189,12 @@ def print_menu
 end
 
 def load_students
-  file = File.open("students.csv", "r")
+  if !(ARGV.empty?)
+    file = File.open(ARGV.first, "r")
+  else
+    file = File.open("students.csv", "r")
+  end
+
   file.readlines.each do |line|
   name, cohort, hobbies, country, height = line.chomp.split(',')
     @students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
@@ -252,7 +204,12 @@ end
 
 
 def save_students
-  file = File.open("students.csv", "w")
+  if !(ARGV.empty?)
+    file = File.open(ARGV.first, "w")
+  else
+    file = File.open("students.csv", "w")
+  end
+
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobbies], student[:country], student[:height]]
     csv_line = student_data.join(",")
@@ -263,7 +220,7 @@ end
 
 
 def interactive_menu()
-  if File.file? ("students.csv")
+  if (File.file? ("students.csv")) || (File.file? (ARGV.first.to_s))
     @students = []
     load_students
   else
@@ -271,7 +228,7 @@ def interactive_menu()
   end
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
