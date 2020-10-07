@@ -1,3 +1,4 @@
+require 'csv'
 # Header Method
 def print_header
   puts "The students of Villains Academy".center(50, "~")
@@ -100,47 +101,15 @@ def changes()
 end
 
 
-def print_cohort()
-  cohorts = []
-  @students.each do |student|
-    cohort = student[:cohort]
-    if ! (cohorts.include? cohort)
-      cohorts.push(cohort)
-    end
-  end
-  cohorts.each do |cohort|
-    puts "Cohort: #{cohort}".center(50, "-")
-    @students.each do |student|
-      if student[:cohort] == cohort
-        puts student[:name]
-      end
-    end
-  end
-end
-
 # Student Normal
 def print_names()
   # Loop Over Array
   @students.each do |hash|
-    # Get the number
-    num = @students.find_index(hash)
-    # Start String
-    if num > 0
-      line = num.to_s + ". "
-      # Loop Over Hash
-      hash.each do |key, value|
-        # Add to line
-        if key == :height
-          line = line + key.to_s + ": " + value.to_s
-        else
-          line = line + key.to_s + ": " + value.to_s + ", "
-        end
-    # End Loop Hash
-      end
+    if hash[:name] != 'name'
+      puts "Name: " + hash[:name] + " // Cohort: " + hash[:cohort] + " // Hobbies: " + hash[:hobbies] +
+      " // Country: " + hash[:country] + " // Height: " + hash[:height]
     end
-    # Puts the line
-    puts line
-    end
+  end
   ans = ask("Would you like to make changes? y/n")
   if ans == "y"
     changes()
@@ -190,16 +159,16 @@ end
 
 def load_students
   if !(ARGV.empty?)
-    file = File.open(ARGV.first, "r")
+    table = CSV.parse(File.read(ARGV.first), write_headers: true, :headers => ["name",  "cohort",  "hobbies",  "country",  "height"])
   else
-    file = File.open("students.csv", "r")
+    table = CSV.parse(File.read("students.csv"), write_headers: true, :headers => ["name",  "cohort",  "hobbies",  "country",  "height"])
   end
 
-  file.readlines.each do |line|
-  name, cohort, hobbies, country, height = line.chomp.split(',')
-    @students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
+  (0... table.length).each do |num|
+    @students << {name: table[num]['name'], cohort: table[num]['cohort'],
+       hobbies: table[num]['hobbies'], country: table[num]['country'], height:
+       table[num]['height']}
   end
-  file.close
 end
 
 def save_students
